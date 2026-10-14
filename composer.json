@@ -6,8 +6,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "James Kabz",
-            "email": "kabogp@gmail.com"
+            "name": "STL Horizon"
         }
     ],
     "require": {
@@ -24,18 +23,18 @@
     },
     "autoload": {
         "psr-4": {
-            "JamesKabz\\Sms\\": "src/"
+            "StlHorizon\\Sms\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JamesKabz\\Sms\\Tests\\": "tests/"
+            "StlHorizon\\Sms\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "JamesKabz\\Sms\\Providers\\SmsServiceProvider"
+                "StlHorizon\\Sms\\Providers\\SmsServiceProvider"
             ]
         }
     },

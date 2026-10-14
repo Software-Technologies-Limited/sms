@@ -1,6 +1,6 @@
 <?php
 
-namespace JamesKabz\Sms\Models;
+namespace StlHorizon\Sms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

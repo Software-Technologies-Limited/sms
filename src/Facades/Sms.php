@@ -1,9 +1,9 @@
 <?php
 
-namespace JamesKabz\Sms\Facades;
+namespace StlHorizon\Sms\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use JamesKabz\Sms\Services\SmsManager;
+use StlHorizon\Sms\Services\SmsManager;
 
 class Sms extends Facade
 {

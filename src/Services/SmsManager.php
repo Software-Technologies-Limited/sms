@@ -1,23 +1,21 @@
 <?php
 
-namespace JamesKabz\Sms\Services;
+namespace StlHorizon\Sms\Services;
 
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Schema;
 use InvalidArgumentException;
-use JamesKabz\Sms\Contracts\SmsDriver;
-use JamesKabz\Sms\Models\SmsLog;
-use JamesKabz\Sms\Services\TwilioSms;
+use StlHorizon\Sms\Contracts\SmsDriver;
+use StlHorizon\Sms\Models\SmsLog;
 
 class SmsManager
 {
     private array $drivers = [];
+
     private array $customCreators = [];
 
-    public function __construct(private Container $app, private array $config)
-    {
-    }
+    public function __construct(private Container $app, private array $config) {}
 
     public function driver(?string $name = null): SmsDriver
     {
@@ -99,7 +97,7 @@ class SmsManager
     {
         $templates = $this->config['templates'] ?? [];
 
-        if (!isset($templates[$templateKey])) {
+        if (! isset($templates[$templateKey])) {
             throw new InvalidArgumentException("SMS template [{$templateKey}] is not defined.");
         }
 
@@ -109,7 +107,7 @@ class SmsManager
     private function renderTemplate(string $template, array $data): string
     {
         foreach ($data as $key => $value) {
-            $template = str_replace('{' . $key . '}', (string) $value, $template);
+            $template = str_replace('{'.$key.'}', (string) $value, $template);
         }
 
         return $template;
@@ -119,13 +117,13 @@ class SmsManager
     {
         $logging = $this->config['logging']['enabled'] ?? false;
 
-        if (!$logging) {
+        if (! $logging) {
             return;
         }
 
         $table = $this->config['logging']['table'] ?? 'sms_logs';
 
-        if (!Schema::hasTable($table)) {
+        if (! Schema::hasTable($table)) {
             return;
         }
 

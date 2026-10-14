@@ -1,20 +1,18 @@
 <?php
 
-namespace JamesKabz\Sms\Notifications;
+namespace StlHorizon\Sms\Notifications;
 
 use Illuminate\Notifications\Notification;
-use JamesKabz\Sms\Services\SmsManager;
 use InvalidArgumentException;
+use StlHorizon\Sms\Services\SmsManager;
 
 class SmsChannel
 {
-    public function __construct(private SmsManager $sms)
-    {
-    }
+    public function __construct(private SmsManager $sms) {}
 
     public function send(mixed $notifiable, Notification $notification): ?array
     {
-        if (!method_exists($notification, 'toSms')) {
+        if (! method_exists($notification, 'toSms')) {
             return null;
         }
 

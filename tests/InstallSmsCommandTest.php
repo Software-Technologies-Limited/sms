@@ -1,6 +1,6 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
 use Illuminate\Support\Facades\Schema;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
-use JamesKabz\Sms\Services\TwilioSms;
+use StlHorizon\Sms\Services\TwilioSms;
 
 class TwilioSmsTest extends TestCase
 {
@@ -82,16 +82,17 @@ class TwilioSmsTest extends TestCase
     private function basicAuthPassword($request): ?string
     {
         $header = $request->header('Authorization')[0] ?? null;
-        if (!$header || !str_starts_with($header, 'Basic ')) {
+        if (! $header || ! str_starts_with($header, 'Basic ')) {
             return null;
         }
 
         $decoded = base64_decode(substr($header, 6));
-        if (!$decoded || !str_contains($decoded, ':')) {
+        if (! $decoded || ! str_contains($decoded, ':')) {
             return null;
         }
 
         [, $password] = explode(':', $decoded, 2);
+
         return $password;
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace JamesKabz\Sms\Providers;
+namespace StlHorizon\Sms\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use JamesKabz\Sms\Console\InstallSmsCommand;
-use JamesKabz\Sms\Http\Controllers\SmsWebhookController;
-use JamesKabz\Sms\Services\AfricasTalkingSms;
-use JamesKabz\Sms\Services\SmsManager;
-use JamesKabz\Sms\Services\TwilioSms;
+use StlHorizon\Sms\Console\InstallSmsCommand;
+use StlHorizon\Sms\Http\Controllers\SmsWebhookController;
+use StlHorizon\Sms\Services\AfricasTalkingSms;
+use StlHorizon\Sms\Services\SmsManager;
+use StlHorizon\Sms\Services\TwilioSms;
 
 class SmsServiceProvider extends ServiceProvider
 {

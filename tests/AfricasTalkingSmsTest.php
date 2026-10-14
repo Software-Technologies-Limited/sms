@@ -1,11 +1,11 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
-use JamesKabz\Sms\Services\AfricasTalkingSms;
+use StlHorizon\Sms\Services\AfricasTalkingSms;
 
 class AfricasTalkingSmsTest extends TestCase
 {

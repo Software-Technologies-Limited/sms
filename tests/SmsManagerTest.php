@@ -1,9 +1,8 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
-use JamesKabz\Sms\Models\SmsLog;
-use JamesKabz\Sms\Services\SmsManager;
+use StlHorizon\Sms\Services\SmsManager;
 
 class SmsManagerTest extends TestCase
 {

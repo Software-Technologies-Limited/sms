@@ -1,11 +1,11 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use JamesKabz\Sms\Providers\SmsServiceProvider;
-use JamesKabz\Sms\Tests\Fakes\FakeSmsDriver;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use StlHorizon\Sms\Providers\SmsServiceProvider;
+use StlHorizon\Sms\Tests\Fakes\FakeSmsDriver;
 
 class TestCase extends OrchestraTestCase
 {

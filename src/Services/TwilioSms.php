@@ -1,17 +1,15 @@
 <?php
 
-namespace JamesKabz\Sms\Services;
+namespace StlHorizon\Sms\Services;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
-use JamesKabz\Sms\Contracts\SmsDriver;
+use StlHorizon\Sms\Contracts\SmsDriver;
 
 class TwilioSms implements SmsDriver
 {
-    public function __construct(private array $config)
-    {
-    }
+    public function __construct(private array $config) {}
 
     public function send(string|array $to, string $message, array $options = []): array
     {
@@ -58,7 +56,8 @@ class TwilioSms implements SmsDriver
     private function endpoint(): string
     {
         $base = $this->config['endpoint'] ?? 'https://api.twilio.com/2010-04-01';
-        return rtrim($base, '/') . '/Accounts/' . $this->config['account_sid'] . '/Messages.json';
+
+        return rtrim($base, '/').'/Accounts/'.$this->config['account_sid'].'/Messages.json';
     }
 
     private function normalizeRecipients(string|array $to): array
@@ -68,6 +67,7 @@ class TwilioSms implements SmsDriver
         }
 
         $to = trim($to);
+
         return $to === '' ? [] : [$to];
     }
 
@@ -78,11 +78,11 @@ class TwilioSms implements SmsDriver
             'Body' => $message,
         ], $options);
 
-        if (!empty($this->config['from']) && empty($payload['From'])) {
+        if (! empty($this->config['from']) && empty($payload['From'])) {
             $payload['From'] = $this->config['from'];
         }
 
-        if (!empty($this->config['messaging_service_sid']) && empty($payload['MessagingServiceSid'])) {
+        if (! empty($this->config['messaging_service_sid']) && empty($payload['MessagingServiceSid'])) {
             $payload['MessagingServiceSid'] = $this->config['messaging_service_sid'];
         }
 

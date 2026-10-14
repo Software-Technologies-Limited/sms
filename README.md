@@ -8,7 +8,8 @@ Laravel package for sending SMS via Africa's Talking and Twilio.
 - Laravel 10/11/12/13
 
 Repository: [Software-Technologies-Limited/sms](https://github.com/Software-Technologies-Limited/sms).
-The PHP namespace `JamesKabz\Sms` remains unchanged for compatibility.
+The PHP namespace is `StlHorizon\Sms`. When upgrading from earlier releases,
+update imports and custom driver references to this namespace.
 
 ## Installation from Packagist
 
@@ -85,7 +86,7 @@ SMS_WEBHOOK_PATH=sms/webhook
 ### Facade
 
 ```php
-use JamesKabz\Sms\Facades\Sms;
+use StlHorizon\Sms\Facades\Sms;
 
 Sms::send('+2547XXXXXXXX', 'Hello from Africa\'s Talking');
 ```
@@ -107,7 +108,7 @@ Use Twilio:
 SMS_DRIVER=twilio
 ```
 
-To add another driver, define it in `config/sms.php` under `drivers` with a `class` key that implements `JamesKabz\\Sms\\Contracts\\SmsDriver`, then set `SMS_DRIVER` to that name.
+To add another driver, define it in `config/sms.php` under `drivers` with a `class` key that implements `StlHorizon\\Sms\\Contracts\\SmsDriver`, then set `SMS_DRIVER` to that name.
 
 ### Send with a template
 
@@ -122,7 +123,7 @@ Sms::sendTemplate('compliance_notice', '+2547XXXXXXXX', [
 ### Dependency Injection
 
 ```php
-use JamesKabz\Sms\Services\SmsManager;
+use StlHorizon\Sms\Services\SmsManager;
 
 public function send(SmsManager $sms)
 {
@@ -143,7 +144,7 @@ Sms::send('+2547XXXXXXXX', 'Hello', [
 
 ```php
 use Illuminate\\Notifications\\Notification;
-use JamesKabz\\Sms\\Notifications\\SmsChannel;
+use StlHorizon\\Sms\\Notifications\\SmsChannel;
 
 class ComplianceNotice extends Notification
 {

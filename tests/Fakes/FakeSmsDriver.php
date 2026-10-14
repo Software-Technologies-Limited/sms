@@ -1,8 +1,8 @@
 <?php
 
-namespace JamesKabz\Sms\Tests\Fakes;
+namespace StlHorizon\Sms\Tests\Fakes;
 
-use JamesKabz\Sms\Contracts\SmsDriver;
+use StlHorizon\Sms\Contracts\SmsDriver;
 
 class FakeSmsDriver implements SmsDriver
 {

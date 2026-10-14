@@ -1,10 +1,10 @@
 <?php
 
-namespace JamesKabz\Sms\Tests;
+namespace StlHorizon\Sms\Tests;
 
 use Illuminate\Notifications\Notification;
-use JamesKabz\Sms\Notifications\SmsChannel;
-use JamesKabz\Sms\Services\SmsManager;
+use StlHorizon\Sms\Notifications\SmsChannel;
+use StlHorizon\Sms\Services\SmsManager;
 
 class SmsChannelTest extends TestCase
 {
@@ -12,7 +12,7 @@ class SmsChannelTest extends TestCase
     {
         $channel = new SmsChannel($this->app->make(SmsManager::class));
 
-        $response = $channel->send(new TestNotifiable(), new TestNotification());
+        $response = $channel->send(new TestNotifiable, new TestNotification);
 
         $this->assertTrue($response['success']);
         $this->assertSame('Hello from notification.', $response['data']['message']);

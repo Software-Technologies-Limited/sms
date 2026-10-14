@@ -1,6 +1,6 @@
 <?php
 
-namespace JamesKabz\Sms\Console;
+namespace StlHorizon\Sms\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;

@@ -1,6 +1,6 @@
 <?php
 
-namespace JamesKabz\Sms\Contracts;
+namespace StlHorizon\Sms\Contracts;
 
 interface SmsDriver
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace JamesKabz\Sms\Http\Controllers;
+namespace StlHorizon\Sms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
-use JamesKabz\Sms\Models\SmsLog;
+use StlHorizon\Sms\Models\SmsLog;
 
 class SmsWebhookController extends Controller
 {

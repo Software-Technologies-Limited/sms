@@ -1,12 +1,12 @@
 <?php
 
-namespace JamesKabz\Sms\Services;
+namespace StlHorizon\Sms\Services;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
-use JamesKabz\Sms\Contracts\SmsDriver;
+use StlHorizon\Sms\Contracts\SmsDriver;
 
 class AfricasTalkingSms implements SmsDriver
 {
