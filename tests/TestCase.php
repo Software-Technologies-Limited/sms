@@ -4,6 +4,7 @@ namespace JamesKabz\Sms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JamesKabz\Sms\Providers\SmsServiceProvider;
+use JamesKabz\Sms\Tests\Fakes\FakeSmsDriver;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
@@ -25,10 +26,11 @@ class TestCase extends OrchestraTestCase
         ]);
 
         $app['config']->set('sms.logging.enabled', true);
+        $app['config']->set('sms.load_migrations', true);
         $app['config']->set('sms.logging.table', 'sms_logs');
         $app['config']->set('sms.default', 'fake');
         $app['config']->set('sms.drivers.fake', [
-            'class' => \JamesKabz\Sms\Tests\Fakes\FakeSmsDriver::class,
+            'class' => FakeSmsDriver::class,
         ]);
         $app['config']->set('sms.templates', [
             'compliance_notice' => 'Hello {name}, your status is {status}.',

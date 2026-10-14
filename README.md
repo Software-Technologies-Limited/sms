@@ -166,12 +166,20 @@ To resolve the phone number, implement `routeNotificationForSms()` on your notif
 
 ## Logging
 
-When `SMS_LOGGING=true`, send attempts are stored in the `sms_logs` table.
-Run migrations in your app:
+Migrations are disabled by default. Installing the package or running your application's
+normal migrations will not create the package's table unless you explicitly enable
+`SMS_LOAD_MIGRATIONS=true`.
+
+For guided setup, run:
 
 ```bash
-php artisan migrate
+php artisan sms:install
 ```
+
+This publishes configuration and asks whether to create the package's SMS log table.
+The default answer is **No**. Choose No for eBoard, which already has `ebr_sms_outbox`.
+Choosing Yes runs only the package migration on the default database and skips it if the
+configured log table already exists. When using this optional table, set `SMS_LOGGING=true`.
 
 ## Webhook (delivery reports)
 

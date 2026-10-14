@@ -4,6 +4,7 @@ namespace JamesKabz\Sms\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use JamesKabz\Sms\Console\InstallSmsCommand;
 use JamesKabz\Sms\Http\Controllers\SmsWebhookController;
 use JamesKabz\Sms\Services\AfricasTalkingSms;
 use JamesKabz\Sms\Services\SmsManager;
@@ -40,8 +41,12 @@ class SmsServiceProvider extends ServiceProvider
             __DIR__.'/../Config/sms.php' => config_path('sms.php'),
         ], 'sms-config');
 
-        if (config('sms.load_migrations', true)) {
+        if (config('sms.load_migrations', false)) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([InstallSmsCommand::class]);
         }
 
         $this->registerWebhookRoutes();

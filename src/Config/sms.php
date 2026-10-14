@@ -29,7 +29,7 @@ return [
         // 'compliance_notice' => 'Dear {name}, your status is {status}.',
     ],
 
-    'load_migrations' => env('SMS_LOAD_MIGRATIONS', true),
+    'load_migrations' => env('SMS_LOAD_MIGRATIONS', false),
 
     'logging' => [
         'enabled' => env('SMS_LOGGING', false),
