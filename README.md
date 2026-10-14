@@ -5,7 +5,10 @@ Laravel package for sending SMS via Africa's Talking and Twilio.
 ## Requirements
 
 - PHP 8.1+
-- Laravel 10/11/12
+- Laravel 10/11/12/13
+
+Repository: [Software-Technologies-Limited/sms](https://github.com/Software-Technologies-Limited/sms).
+The Composer name `james-kabz/sms` and PHP namespace remain unchanged for compatibility.
 
 ## Installation (local path)
 
@@ -78,6 +81,9 @@ use JamesKabz\Sms\Facades\Sms;
 
 Sms::send('+2547XXXXXXXX', 'Hello from Africa\'s Talking');
 ```
+
+Sending happens immediately in the current request; no Laravel queue worker is required.
+The sandbox username automatically selects the sandbox API endpoint unless an endpoint is explicitly configured.
 
 ### Drivers
 
@@ -181,6 +187,23 @@ This registers a POST endpoint that stores the payload in `sms_logs` (when loggi
     'data' => [...],
     'body' => '...'
 ]
+```
+
+The Africa's Talking driver also returns `recipients` and `error`. Each recipient contains the
+gateway's `number`, `status`, `statusCode`, `messageId`, and `cost` when supplied.
+`success` is true only when the HTTP request succeeds and every recipient is accepted with
+status code 101. Acceptance is not confirmation of handset delivery. Connection failures return
+`success = false` and `status = 0`; they are not automatically retried.
+
+For eBoard, retain the existing tenant `ebr_sms_outbox` table as the send log. Map recipient
+results to `to`, `status`, `status_code`, `messageId`, and `cost`; the application supplies
+`id_user`, `id_company`, `notification_type`, `id`, `message`, `from`, and `time_sent`.
+This mapping must be implemented in the consuming application's notification flow.
+Disable the package's separate logging table and migration registration when using it:
+
+```dotenv
+SMS_LOGGING=false
+SMS_LOAD_MIGRATIONS=false
 ```
 
 ## Notes

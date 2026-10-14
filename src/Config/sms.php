@@ -8,7 +8,9 @@ return [
             'username' => env('AFRICASTALKING_USERNAME', 'sandbox'),
             'api_key' => env('AFRICASTALKING_API_KEY'),
             'from' => env('AFRICASTALKING_FROM'),
-            'endpoint' => env('AFRICASTALKING_SMS_ENDPOINT', 'https://api.africastalking.com/version1/messaging'),
+            'endpoint' => env('AFRICASTALKING_SMS_ENDPOINT', env('AFRICASTALKING_USERNAME', 'sandbox') === 'sandbox'
+                ? 'https://api.sandbox.africastalking.com/version1/messaging'
+                : 'https://api.africastalking.com/version1/messaging'),
             'timeout' => (int) env('AFRICASTALKING_TIMEOUT', 15),
             // Optional defaults that can be overridden per send() call.
             'bulk_mode' => env('AFRICASTALKING_BULK_MODE'),
@@ -26,6 +28,8 @@ return [
     'templates' => [
         // 'compliance_notice' => 'Dear {name}, your status is {status}.',
     ],
+
+    'load_migrations' => env('SMS_LOAD_MIGRATIONS', true),
 
     'logging' => [
         'enabled' => env('SMS_LOGGING', false),

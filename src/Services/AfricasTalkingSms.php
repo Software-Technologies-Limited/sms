@@ -3,47 +3,70 @@
 namespace JamesKabz\Sms\Services;
 
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
 use JamesKabz\Sms\Contracts\SmsDriver;
 
 class AfricasTalkingSms implements SmsDriver
 {
-    public function __construct(private array $config)
-    {
-    }
+    public function __construct(private array $config) {}
 
     public function send(string|array $to, string $message, array $options = []): array
     {
         $this->guardConfig();
 
+        $recipients = $this->formatRecipients($to);
+        if ($recipients === '' || trim($message) === '') {
+            throw new InvalidArgumentException('SMS recipients and message are required.');
+        }
+
+        foreach (['username', 'to', 'message', 'enqueue'] as $reserved) {
+            unset($options[$reserved]);
+        }
+
         $payload = array_merge([
             'username' => $this->config['username'],
-            'to' => $this->formatRecipients($to),
+            'to' => $recipients,
             'message' => $message,
         ], $this->defaultOptions(), $options);
 
-        if (!empty($this->config['from']) && empty($payload['from'])) {
+        if (! empty($this->config['from']) && empty($payload['from'])) {
             $payload['from'] = $this->config['from'];
         }
 
-        $response = Http::timeout($this->config['timeout'] ?? 15)
-            ->asForm()
-            ->withHeaders([
-                'apiKey' => $this->config['api_key'],
-                'Accept' => 'application/json',
-            ])
-            ->post($this->config['endpoint'], $payload);
+        try {
+            $response = Http::timeout($this->config['timeout'] ?? 15)
+                ->asForm()
+                ->withHeaders([
+                    'apiKey' => $this->config['api_key'],
+                    'Accept' => 'application/json',
+                ])
+                ->post($this->config['endpoint'], $payload);
 
-        if ($response instanceof PromiseInterface) {
-            $response = $response->wait();
+            if ($response instanceof PromiseInterface) {
+                $response = $response->wait();
+            }
+        } catch (ConnectionException $exception) {
+            return [
+                'success' => false, 'status' => 0, 'data' => null, 'body' => '',
+                'recipients' => [], 'error' => 'SMS gateway connection failed. Delivery could not be confirmed.',
+            ];
         }
 
+        $data = $response->json();
+        $results = is_array($data) ? ($data['SMSMessageData']['Recipients'] ?? []) : [];
+        $results = is_array($results) ? array_values(array_filter($results, 'is_array')) : [];
+        $accepted = count(array_filter($results, fn (array $recipient): bool => (int) ($recipient['statusCode'] ?? 0) === 101));
+        $success = $response->successful() && count($results) === count(explode(',', $recipients)) && $accepted === count($results);
+
         return [
-            'success' => $response->successful(),
+            'success' => $success,
             'status' => $response->status(),
-            'data' => $response->json(),
+            'data' => $data,
             'body' => $response->body(),
+            'recipients' => $results,
+            'error' => $success ? null : 'The SMS gateway did not accept every recipient. Check recipient statuses.',
         ];
     }
 
@@ -64,19 +87,16 @@ class AfricasTalkingSms implements SmsDriver
 
     private function formatRecipients(string|array $to): string
     {
-        if (is_array($to)) {
-            $to = array_filter(array_map('trim', $to));
-            return implode(',', $to);
-        }
+        $recipients = is_array($to) ? $to : explode(',', $to);
 
-        return trim($to);
+        return implode(',', array_unique(array_filter(array_map('trim', $recipients), fn (string $number): bool => $number !== '')));
     }
 
     private function defaultOptions(): array
     {
         $options = [];
 
-        if ($this->config['bulk_mode'] !== null && $this->config['bulk_mode'] !== '') {
+        if (isset($this->config['bulk_mode']) && $this->config['bulk_mode'] !== '') {
             $options['bulkSMSMode'] = (int) $this->config['bulk_mode'];
         }
 
