@@ -57,7 +57,7 @@ class AfricasTalkingSms implements SmsDriver
         $data = $response->json();
         $results = is_array($data) ? ($data['SMSMessageData']['Recipients'] ?? []) : [];
         $results = is_array($results) ? array_values(array_filter($results, 'is_array')) : [];
-        $accepted = count(array_filter($results, fn (array $recipient): bool => (int) ($recipient['statusCode'] ?? 0) === 101));
+        $accepted = count(array_filter($results, fn (array $recipient): bool => in_array((int) ($recipient['statusCode'] ?? 0), [100, 101], true)));
         $success = $response->successful() && count($results) === count(explode(',', $recipients)) && $accepted === count($results);
 
         return [

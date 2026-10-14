@@ -7,7 +7,7 @@ return [
         'africastalking' => [
             'username' => env('AFRICASTALKING_USERNAME', 'sandbox'),
             'api_key' => env('AFRICASTALKING_API_KEY'),
-            'from' => env('AFRICASTALKING_FROM'),
+            'from' => env('AFRICASTALKING_FROM', env('AFRICASTALKING_SENDER_ID')),
             'endpoint' => env('AFRICASTALKING_SMS_ENDPOINT', env('AFRICASTALKING_USERNAME', 'sandbox') === 'sandbox'
                 ? 'https://api.sandbox.africastalking.com/version1/messaging'
                 : 'https://api.africastalking.com/version1/messaging'),

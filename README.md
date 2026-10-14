@@ -208,7 +208,7 @@ This registers a POST endpoint that stores the payload in `sms_logs` (when loggi
 The Africa's Talking driver also returns `recipients` and `error`. Each recipient contains the
 gateway's `number`, `status`, `statusCode`, `messageId`, and `cost` when supplied.
 `success` is true only when the HTTP request succeeds and every recipient is accepted with
-status code 101. Acceptance is not confirmation of handset delivery. Connection failures return
+status code 100 or 101. Acceptance is not confirmation of handset delivery. Connection failures return
 `success = false` and `status = 0`; they are not automatically retried.
 
 For eBoard, retain the existing tenant `ebr_sms_outbox` table as the send log. Map recipient

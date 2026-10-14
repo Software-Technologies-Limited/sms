@@ -44,6 +44,14 @@ class AfricasTalkingSmsTest extends TestCase
         $this->assertCount(2, $response['recipients']);
     }
 
+    public function test_gateway_success_code_100_is_accepted(): void
+    {
+        Http::fake(['*' => Http::response(['SMSMessageData' => ['Recipients' => [
+            ['number' => '+254700000000', 'status' => 'Success', 'statusCode' => 100, 'messageId' => 'AT-100'],
+        ]]], 201)]);
+        $this->assertTrue($this->driver()->send('+254700000000', 'Reminder')['success']);
+    }
+
     public function test_empty_gateway_response_is_not_a_success(): void
     {
         Http::fake(['*' => Http::response('Unexpected response', 200)]);
