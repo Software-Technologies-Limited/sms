@@ -1,4 +1,4 @@
-# james-kabz/sms
+# software-technologies-limited/sms
 
 Laravel package for sending SMS via Africa's Talking and Twilio.
 
@@ -8,7 +8,15 @@ Laravel package for sending SMS via Africa's Talking and Twilio.
 - Laravel 10/11/12/13
 
 Repository: [Software-Technologies-Limited/sms](https://github.com/Software-Technologies-Limited/sms).
-The Composer name `james-kabz/sms` and PHP namespace remain unchanged for compatibility.
+The PHP namespace `JamesKabz\Sms` remains unchanged for compatibility.
+
+## Installation from Packagist
+
+Once the repository is submitted to Packagist under the new name:
+
+```bash
+composer require software-technologies-limited/sms
+```
 
 ## Installation (local path)
 
@@ -19,11 +27,11 @@ The Composer name `james-kabz/sms` and PHP namespace remain unchanged for compat
   "repositories": [
     {
       "type": "path",
-      "url": "packages/james-kabz/sms"
+      "url": "packages/software-technologies-limited/sms"
     }
   ],
   "require": {
-    "james-kabz/sms": "*"
+    "software-technologies-limited/sms": "*"
   }
 }
 ```
@@ -31,7 +39,7 @@ The Composer name `james-kabz/sms` and PHP namespace remain unchanged for compat
 2) Install:
 
 ```bash
-composer update james-kabz/sms
+composer update software-technologies-limited/sms
 ```
 
 ## Configuration
@@ -215,7 +223,7 @@ SMS_LOAD_MIGRATIONS=false
 ## Testing (package)
 
 ```bash
-cd packages/james-kabz/sms
+cd packages/software-technologies-limited/sms
 composer install
 vendor/bin/phpunit
 ```

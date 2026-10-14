@@ -1,5 +1,6 @@
 {
-    "name": "james-kabz/sms",
+    "name": "software-technologies-limited/sms",
+    "homepage": "https://github.com/Software-Technologies-Limited/sms",
     "description": "Laravel package for integrating sms notifications",
     "type": "library",
     "license": "MIT",
